@@ -33,7 +33,7 @@ const Home = () => {
             name="beneficios"
             className="w-full flex justify-evenly items-center mt-10"
           >
-            <div class="rounded-full bg-gray-700 bg-opacity-20 p-4 shadow-lg">
+            <div className="rounded-full bg-gray-700 bg-opacity-20 p-4 shadow-lg">
               <img
                 src={computador}
                 alt=""
@@ -101,7 +101,7 @@ const Home = () => {
             name="quemSomos"
             className="w-full flex justify-evenly items-center mt-10"
           >
-            <div class="rounded-3xl bg-gray-700 bg-opacity-20 p-4 shadow-lg">
+            <div className="rounded-3xl bg-gray-700 bg-opacity-20 p-4 shadow-lg">
               <img
                 src={eu1}
                 alt=""
