@@ -27,6 +27,8 @@ export const useAuthentication = () => {
     }
   }
 
+
+  //register
   const createUser = async (data) => {
     //aqui entra a função de cleanUp
     checkIfIsCancelled();
@@ -66,6 +68,12 @@ export const useAuthentication = () => {
     setLoading(false);
   };
 
+  const logout = () => {
+    checkIfIsCancelled()
+    signOut(auth)
+
+  }
+
  //login do usuario
 const login = async (data) => {
   checkIfIsCancelled();
@@ -104,6 +112,7 @@ const login = async (data) => {
     createUser,
     error,
     loading,
-    login
+    login,
+    logout
   };
 };
