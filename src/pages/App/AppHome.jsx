@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 import NavbarApp from "./components/NavbarApp.jsx";
 
 import { Link } from "react-router-dom";
 
 import logopig from "../../assets/img/logopig.png";
+
+import { useAuthValue } from "@/context/AuthContext.jsx";
 
 import { Receipt } from "lucide-react";
 import { HandCoins } from "lucide-react";
@@ -32,11 +34,15 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useAuthentication } from "@/hooks/useAuthentication.jsx";
 import { useFetchDocuments } from "@/hooks/useFetchDocuments.jsx";
+import { useTotalCashValue } from "@/hooks/useTotalCashValue.jsx";
 
 const AppHome = () => {
   const { documents: amount, loading } = useFetchDocuments("amount");
-
+  const { totalCashValue: total } = useTotalCashValue("totals");
   const { logout } = useAuthentication();
+
+  const {user} = useAuthValue()
+
   return (
     <div className="flex w-full bg-[#1E1E1E] text-white">
       <Sheet>
@@ -89,7 +95,7 @@ const AppHome = () => {
       <div className="flex flex-col w-full">
         <div className="h-14 flex justify-between ml-5 mr-20 items-center">
           <div>
-            <p>Olá Guilherme!</p>
+            <p>Olá,  {user.displayName}!</p>
           </div>
           <div>
             <DropdownMenu>
@@ -115,78 +121,71 @@ const AppHome = () => {
               <p className="text-sm ml-2">Balanço total</p>
               <div className="flex">
                 <h3 className="text-5xl ml-5 font-light">R$:</h3>
-                {amount && amount.length > 0 && (
-                  <h3 className="text-5xl ml-5 font-light">
-                    {amount[0].totalCashValue}
-                  </h3>
-                )}
+                <h3 className="text-5xl ml-5 font-light">{total}</h3>
               </div>
             </div>
             <div className=" w-1/3 bg-[#454545] rounded-lg">
               <p className="text-sm ml-2">Gastos diários</p>
-              <h3 className="text-5xl ml-5 font-light">R$ 243,99</h3>
+              {amount && amount.length > 0 && (
+                <>
+                  <div className="flex items-center">
+                    <p className="text-5xl font-light ml-5">
+                      R$:{" "}
+                      {amount.reduce(
+                        (acc, item) =>
+                          item.type === "withdrawal"
+                            ? acc + Number(item.cashValue)
+                            : acc,
+                        0
+                      )}
+                    </p>
+                  </div>
+                </>
+              )}
             </div>
-            <div className=" w-1/3 bg-[#454545] rounded-lg">
-              <p className="text-sm ml-2">Gastos mensais</p>
-              <h3 className="text-5xl ml-5 font-light">R$ 3004,50</h3>
+            <div className="flex justify-around items-center gap-5">
+              <Link
+                to="/apphome/registerrecipe"
+                className="bg-gradient-to-r p-3 from-[#2e8b57] to-[#61bc84] rounded-lg hover:scale-110 transition-transform"
+              >
+                Registrar Receita
+              </Link>
+              <Link
+                to="/apphome/registerexpense"
+                className="bg-gradient-to-r p-3 from-[#721f1f] to-[#ad3a3a] rounded-lg hover:scale-110 transition-transform"
+              >
+                Registrar Gasto
+              </Link>
             </div>
           </div>
           <div className="flex mt-10 justify-between h-3/6 items-start">
             <div className=" w-1/2 h-full bg-[#454545] rounded-lg p-10 flex flex-col gap-y-6">
               <h2>Movimentações</h2>
-              {amount &&
-                amount.map((val, index, array) => (
-                  <div key={index}>
-                    <p
-                      style={{
-                        color:
-                          index === 0 ||
-                          val.totalCashValue > array[index - 1].totalCashValue
-                            ? "green"
-                            : "red",
-                      }}
-                    >
-                      {val.cashValue}
-                    </p>
-                  </div>
-                ))}
-
-              <div className=" h-10 flex items-center gap-5 border-b border-[#686767] pb-1">
-                <Receipt className="h-full bg-[#61bc84] w-10 rounded-full p-1" />
-                <p className="text-4xl font-light">+ R$ 1000,00</p>
-              </div>
-              <div className=" h-10 flex items-center gap-5 border-b border-[#686767] pb-1">
-                <HandCoins className="h-full bg-[#ad3a3a] w-10 rounded-full p-1" />
-                <p className="text-4xl font-light">+ R$ 1000,00</p>
-              </div>
-              <div className=" h-10 flex items-center gap-5 border-b border-[#686767] pb-1">
-                <Receipt className="h-full bg-[#61bc84] w-10 rounded-full p-1" />
-                <p className="text-4xl font-light">+ R$ 1000,00</p>
-              </div>
-              <div className=" h-10 flex items-center gap-5 border-b border-[#686767] pb-1">
-                <HandCoins className="h-full bg-[#ad3a3a] w-10 rounded-full p-1" />
-                <p className="text-4xl font-light">+ R$ 1000,00</p>
-              </div>
-              <div className=" h-10 flex items-center gap-5 border-b border-[#686767] pb-1">
-                <Receipt className="h-full bg-[#61bc84] w-10 rounded-full p-1" />
-                <p className="text-4xl font-light">+ R$ 1000,00</p>
-              </div>
+              {amount && amount.length > 0 && (
+                <>
+                  {amount.map((item, index) => (
+                    <div key={index}>
+                      {item.type === "deposit" ? (
+                        <div className=" h-10 flex items-center gap-5 border-b border-[#686767] pb-1">
+                          <Receipt className="h-full bg-[#61bc84] w-10 rounded-full p-1" />
+                          <p className="text-4xl font-light">
+                            + R$: {item.cashValue}
+                          </p>
+                        </div>
+                      ) : (
+                        <div className=" h-10 flex items-center gap-5 border-b border-[#686767] pb-1">
+                          <HandCoins className="h-full bg-[#ad3a3a] w-10 rounded-full p-1" />
+                          <p className="text-4xl font-light">
+                            - R$: {item.cashValue}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </>
+              )}
             </div>
             <div className="w-1/2 pl-10 flex flex-col gap-y-10">
-              <div className="flex justify-around">
-                <Link
-                  to="/apphome/registerrecipe"
-                  className="bg-gradient-to-r from-[#2e8b57] to-[#61bc84] rounded-lg hover:scale-110 transition-transform"
-                >
-                  Registrar Receita
-                </Link>
-                <Link
-                  to="/apphome/registerexpense"
-                  className="bg-gradient-to-r from-[#721f1f] to-[#ad3a3a] rounded-lg hover:scale-110 transition-transform"
-                >
-                  Registrar Gasto
-                </Link>
-              </div>
               <Tabs defaultValue="account">
                 <TabsList>
                   <TabsTrigger value="account">

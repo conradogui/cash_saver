@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useInsertDocument } from "@/hooks/useInsertDocument.jsx";
 import { useAuthValue } from "@/context/AuthContext.jsx";
-import useTotalCashValue from "@/hooks/useChangeCashValue.jsx";
+import {useTotalCashValue} from "@/hooks/useTotalCashValue.jsx";
 import { useNavigate } from "react-router-dom";
 
 const CdastrarReceita = () => {
@@ -11,7 +11,7 @@ const CdastrarReceita = () => {
   const [formError, setFormError] = useState("")
 
   const {insertDocument, response} = useInsertDocument("amount")
-  const [totalCashValue, updateTotalCashValue, resetTotalCashValue] = useTotalCashValue();
+  const {totalCashValue, updateTotalCashValue} = useTotalCashValue();
   const navigate = useNavigate()
 
   const handleSubmit =  async (e) => {
@@ -21,6 +21,7 @@ const CdastrarReceita = () => {
     try {
       // Somar o valor atual do cashValue ao totalCashValue
       const newTotalCashValue = totalCashValue + Number(cashValue);
+      
 
       // Atualizar o totalCashValue
       await updateTotalCashValue(newTotalCashValue);
@@ -30,7 +31,8 @@ const CdastrarReceita = () => {
         title,
         cashValue,
         totalCashValue: newTotalCashValue, // isso envia o novo valor atualizado
-        description
+        description,
+        type: 'deposit'
       });
 
       // Resetar cashValue para vazio após adicionar
@@ -81,7 +83,6 @@ const CdastrarReceita = () => {
             />
           </label>
           <div className="flex flex-col items-center">
-            <button onClick={resetTotalCashValue}>Resetar</button>
             {!response.loading && (
               <button className="font-bold text-2xl text-green-400 hover:text-stone-300 cursor-pointer hover:scale-105 transition-transform border border-black rounded-lg w-1/2">
                 Adicionar

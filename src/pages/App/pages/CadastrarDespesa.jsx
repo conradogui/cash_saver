@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useInsertDocument } from "@/hooks/useInsertDocument.jsx";
 import { useAuthValue } from "@/context/AuthContext.jsx";
-import useTotalCashValue from "@/hooks/useChangeCashValue.jsx";
+import {useTotalCashValue} from "@/hooks/useTotalCashValue.jsx";
 import { useNavigate } from "react-router-dom";
 
 const CadastrarDespesa = () => {
@@ -11,7 +11,7 @@ const CadastrarDespesa = () => {
   const [formError, setFormError] = useState("")
 
   const {insertDocument, response} = useInsertDocument("amount")
-  const [totalCashValue, updateTotalCashValue, resetTotalCashValue] = useTotalCashValue();
+  const {totalCashValue, updateTotalCashValue} = useTotalCashValue("totals");
   const navigate = useNavigate()
 
   const handleSubmit =  async (e) => {
@@ -30,7 +30,8 @@ const CadastrarDespesa = () => {
         title,
         cashValue,
         totalCashValue: newTotalCashValue, // isso envia o novo valor atualizado
-        description
+        description,
+        type: 'withdrawal'
       });
 
       // Resetar cashValue para vazio após adicionar
@@ -47,7 +48,7 @@ const CadastrarDespesa = () => {
   return (
     <div className="w-full">
       <div className="max-w-3xl mx-auto h-screen flex flex-col justify-center items-center space-y-5 p-4">
-        <h2 className="font-bold text-4xl">Cadastre sua receita:</h2>
+        <h2 className="font-bold text-4xl">Cadastrar gasto::</h2>
         <p className="text-base font-medium">Preencha os dados abaixo</p>
         <form onSubmit={handleSubmit} className="w-full flex flex-col space-y-5 p-6 border border-black rounded-lg">
           <label className="flex flex-col">
@@ -81,7 +82,6 @@ const CadastrarDespesa = () => {
             />
           </label>
           <div className="flex flex-col items-center">
-            <button onClick={resetTotalCashValue}>Resetar</button>
             {!response.loading && (
               <button className="font-bold text-2xl text-green-400 hover:text-stone-300 cursor-pointer hover:scale-105 transition-transform border border-black rounded-lg w-1/2">
                 Adicionar

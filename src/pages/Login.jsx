@@ -25,7 +25,6 @@ const Login = () => {
       navigate('/apphome');
     }
   
-    console.log(res);
   };
 
 
