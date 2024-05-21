@@ -13,7 +13,6 @@ export const useTotalCashValue = () => {
       if (docSnap.exists()) {
         setTotalCashValue(docSnap.data().value);
       } else {
-        // Caso não exista, criar o documento com valor inicial 0
         await setDoc(docRef, { value: 0 });
       }
     };

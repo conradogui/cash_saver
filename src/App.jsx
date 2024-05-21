@@ -14,13 +14,12 @@ import { useAuthentication } from "./hooks/useAuthentication.jsx";
 import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
-import AppHome from "./pages/App/AppHome.jsx";
+import AppHome from "./pages/App/home/AppHome.jsx";
 import CadastrarDespesa from "./pages/App/pages/CadastrarDespesa.jsx";
 import CadastrarReceita from "./pages/App/pages/CadastrarReceita.jsx";
 import Movimentacoes from "./pages/App/pages/Movimentacoes.jsx";
 
 function App() {
-  //Vamos monitorar o estado do usuário
   const [user, setUser] = useState(undefined);
   const { auth } = useAuthentication();
 

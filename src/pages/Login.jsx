@@ -28,16 +28,11 @@ const Login = () => {
   };
 
 
-  //essa função mapeia se o setError mudou
   useEffect(() => {
     if (authError) {
       setError(authError);
     }
   }, [authError]);
-
-
- 
-
 
   return (
     <div className="flex flex-col sm:flex-row justify-center items-center w-screen h-screen">

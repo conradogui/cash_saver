@@ -35,7 +35,6 @@ const Register = () => {
     console.log(res);
   };
 
-  //mapeia se o setError mudou
   useEffect(() => {
     if (authError) {
       setError(authError);

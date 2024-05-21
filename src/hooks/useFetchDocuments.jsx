@@ -6,6 +6,7 @@ import {
   query,
   orderBy,
   onSnapshot,
+  limit,
   where,
   QuerySnapshot,
 } from "firebase/firestore";
@@ -26,7 +27,7 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
 
       try {
         let q;
-        q = await query(collectionRef, orderBy("createdAt", "desc"));
+        q = await query(collectionRef, orderBy("createdAt", "desc"), limit(limit));
 
         await onSnapshot(q, (querySnapshot) => {
           setDocuments(
@@ -45,7 +46,7 @@ export const useFetchDocuments = (docCollection, search = null, uid = null) => {
       }
     }
     loadData();
-  }, [docCollection, search, uid, cancelled]);
+  }, [docCollection, limit, search, uid, cancelled]);
 
   useEffect(() => {
     return () => setCancelled(true);
