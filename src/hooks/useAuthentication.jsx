@@ -82,7 +82,7 @@ const login = async (data) => {
   try {
     await signInWithEmailAndPassword(auth, data.email, data.password);
     setLoading(false);
-    return true; // Retorna true para indicar sucesso no login
+    return true; 
   } catch (error) {
     let systemErrorMessage;
 
@@ -97,7 +97,7 @@ const login = async (data) => {
     }
     setError(systemErrorMessage);
     setLoading(false);
-    return false; // Retorna false para indicar falha no login
+    return false; 
   }
 };
 

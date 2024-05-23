@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { db } from "@/firebase/config.jsx";
-import { doc, getDoc, updateDoc, setDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, setDoc } from "firebase/firestore";
 
 export const useTotalCashValue = () => {
   const [totalCashValue, setTotalCashValue] = useState(0);
@@ -30,6 +30,5 @@ export const useTotalCashValue = () => {
     }
   };
 
-  return {totalCashValue, updateTotalCashValue};
+  return { totalCashValue, updateTotalCashValue };
 };
-

@@ -17,7 +17,8 @@ import Register from "./pages/Register.jsx";
 import AppHome from "./pages/App/home/AppHome.jsx";
 import CadastrarDespesa from "./pages/App/pages/CadastrarDespesa.jsx";
 import CadastrarReceita from "./pages/App/pages/CadastrarReceita.jsx";
-import Movimentacoes from "./pages/App/pages/Movimentacoes.jsx";
+import Profile from "./pages/App/pages/Profile.jsx";
+import Team from "./pages/App/pages/Team.jsx";
 
 function App() {
   const [user, setUser] = useState(undefined);
@@ -47,7 +48,8 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/apphome/registerexpense" element={<CadastrarDespesa/>} />
             <Route path="/apphome/registerrecipe" element={<CadastrarReceita/>} />
-            <Route path="/apphome/movimentacoes" element={<Movimentacoes/>} />
+            <Route path="/apphome/profile" element={<Profile/>} />
+            <Route path="/apphome/team" element={<Team/>} />
           </Routes>
         </BrowserRouter>
       </AuthProvider>

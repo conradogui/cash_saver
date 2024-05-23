@@ -29,7 +29,8 @@ const useTotalCashValue = () => {
       console.error("Erro ao atualizar totalCashValue: ", error);
     }
   };
-
+  
+//usando temporiariamente para resetar ban;co total do firebase
   const resetTotalCashValue = async () => {
     try {
       const docRef = doc(db, "totals", "totalCashValue");

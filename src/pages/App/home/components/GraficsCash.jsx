@@ -62,6 +62,8 @@ const GraficsCash = () => {
     }
   }, [documents, selectedDate]);
 
+  console.log(documents);
+
   useEffect(() => {
     flatpickr("#date", {
       dateFormat: "Y-m-d",

@@ -1,6 +1,7 @@
 //Home components
 import Header from "./components/Header.jsx";
 import MainSec from "./components/MainSec.jsx";
+import { Link } from "react-router-dom";
 
 //hooks
 import { useAuthValue } from "@/context/AuthContext.jsx";
@@ -27,7 +28,7 @@ const AppHome = () => {
       <Header />
       <div className="flex flex-col w-full">
         <div className="h-14 flex justify-between ml-5 mr-20 items-center">
-          <div className="ml-40">
+          <div className="sm:ml-40 ml-10">
             <p className="text-lg font-semibold">Olá, {user.displayName}!</p>
           </div>
           <div>
@@ -38,9 +39,18 @@ const AppHome = () => {
               <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Perfil</DropdownMenuItem>
-                <DropdownMenuItem>Configurações</DropdownMenuItem>
-                <DropdownMenuItem>Team</DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link to="/apphome/profile">Perfil</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                <Link to="/apphome/team">Sobre</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                <Link to="/apphome/registerexpense">Registrar despesa</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                <Link to="/apphome/registerrecipe">Registrar receita</Link>
+                </DropdownMenuItem>
                 <DropdownMenuItem>
                   <button onClick={logout}>Sair</button>
                 </DropdownMenuItem>

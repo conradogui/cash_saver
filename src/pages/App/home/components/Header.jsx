@@ -3,7 +3,7 @@ import { ArrowLeftRight } from "lucide-react";
 import { Receipt } from "lucide-react";
 
 import NavbarApp from "../../components/NavbarApp.jsx";
-import { HandCoins } from "lucide-react";
+import { CircleUserRound } from 'lucide-react';
 
 import logopig from "../../../../assets/img/logopig.png";
 
@@ -18,8 +18,8 @@ import {
 
 const Header = () => {
   return (
-    <Sheet>
-      <div className="border-r border-[#454545] flex flex-col gap-y-36 items-center h-screen bg-gray-900 fixed left-0 top-0">
+    <Sheet className="sm:hidden">
+      <div className="border-r border-[#454545]  sm:flex hidden flex-col gap-y-36 items-center h-screen bg-gray-900 fixed left-0 top-0">
         <div className="">
           <SheetTrigger>
             <img
@@ -32,7 +32,7 @@ const Header = () => {
         <div className="flex flex-col justify-center items-center gap-y-20 max-w-14 ml-3">
           <SheetTrigger className="w-full">
             <div className="bg-[#1E392E] hover:scale-125 transition-transform flex justify-center p-2 rounded-lg">
-              <HandCoins />
+            <CircleUserRound />
             </div>
           </SheetTrigger>
           <SheetTrigger className="w-full">
